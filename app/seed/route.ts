@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import { db } from '@vercel/postgres';
-import { invoices, customers, revenue, users } from '../lib/placeholder-data';
+// import { invoices, customers, revenue, users } from '../lib/placeholder-data';
 
 const client = await db.connect();
 
@@ -15,18 +15,18 @@ async function seedUsers() {
     );
   `;
 
-  const insertedUsers = await Promise.all(
-    users.map(async (user) => {
-      const hashedPassword = await bcrypt.hash(user.password, 10);
-      return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
-        ON CONFLICT (id) DO NOTHING;
-      `;
-    }),
-  );
+  // const insertedUsers = await Promise.all(
+  //   users.map(async (user) => {
+  //     const hashedPassword = await bcrypt.hash(user.password, 10);
+  //     return client.sql`
+  //       INSERT INTO users (id, name, email, password)
+  //       VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+  //       ON CONFLICT (id) DO NOTHING;
+  //     `;
+  //   }),
+  // );
 
-  return insertedUsers;
+//   return insertedUsers;
 }
 
 async function seedInvoices() {
@@ -67,17 +67,17 @@ async function seedCustomers() {
     );
   `;
 
-  const insertedCustomers = await Promise.all(
-    customers.map(
-      (customer) => client.sql`
-        INSERT INTO customers (id, name, email, image_url)
-        VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
-        ON CONFLICT (id) DO NOTHING;
-      `,
-    ),
-  );
+  // const insertedCustomers = await Promise.all(
+  //   customers.map(
+  //     (customer) => client.sql`
+  //       INSERT INTO customers (id, name, email, image_url)
+  //       VALUES (${customer.id}, ${customer.name}, ${customer.email}, ${customer.image_url})
+  //       ON CONFLICT (id) DO NOTHING;
+  //     `,
+  //   ),
+  // );
 
-  return insertedCustomers;
+  // return insertedCustomers;
 }
 
 async function seedRevenue() {
@@ -88,17 +88,17 @@ async function seedRevenue() {
     );
   `;
 
-  const insertedRevenue = await Promise.all(
-    revenue.map(
-      (rev) => client.sql`
-        INSERT INTO revenue (month, revenue)
-        VALUES (${rev.month}, ${rev.revenue})
-        ON CONFLICT (month) DO NOTHING;
-      `,
-    ),
-  );
+  // const insertedRevenue = await Promise.all(
+  //   revenue.map(
+  //     (rev) => client.sql`
+  //       INSERT INTO revenue (month, revenue)
+  //       VALUES (${rev.month}, ${rev.revenue})
+  //       ON CONFLICT (month) DO NOTHING;
+  //     `,
+  //   ),
+  // );
 
-  return insertedRevenue;
+  // return insertedRevenue;
 }
 
 export async function GET() {
